@@ -9,18 +9,22 @@ import { TreatmentResponse } from '../models/medical.models';
 @Component({
   standalone: true,
   imports: [MatDialogModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
-  template: `<h2 mat-dialog-title>{{data ? 'Modifier' : 'Ajouter'}} traitement</h2>
-  <mat-dialog-content>
+  template: `<div class="glass-card" style="padding:18px;">
+    <div class="eyebrow">{{data ? 'Edit' : 'Add'}} treatment</div>
+    <h3 style="margin:6px 0 12px;">Treatment plan</h3>
     <form [formGroup]="form" class="form-grid">
-      <mat-form-field><mat-label>Nom</mat-label><input matInput formControlName="treatmentName"></mat-form-field>
-      <mat-form-field><mat-label>Dosage</mat-label><input matInput formControlName="dosage"></mat-form-field>
-      <mat-form-field><mat-label>Fréquence</mat-label><input matInput formControlName="frequency"></mat-form-field>
-      <mat-form-field><mat-label>Début</mat-label><input matInput type="date" formControlName="startDate"></mat-form-field>
-      <mat-form-field><mat-label>Fin</mat-label><input matInput type="date" formControlName="endDate"></mat-form-field>
-      <mat-form-field><mat-label>Statut</mat-label><input matInput formControlName="status"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Name</mat-label><input matInput formControlName="treatmentName"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Dosage</mat-label><input matInput formControlName="dosage"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Frequency</mat-label><input matInput formControlName="frequency"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Start</mat-label><input matInput type="date" formControlName="startDate"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>End</mat-label><input matInput type="date" formControlName="endDate"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Status</mat-label><input matInput formControlName="status"></mat-form-field>
     </form>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end"><button mat-button (click)="ref.close()">Annuler</button><button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Enregistrer</button></mat-dialog-actions>`
+    <div class="actions" style="justify-content:flex-end;margin-top:14px;">
+      <button mat-button (click)="ref.close()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Save</button>
+    </div>
+  </div>`
 })
 export class TreatmentDialogComponent {
   form = this.fb.group({

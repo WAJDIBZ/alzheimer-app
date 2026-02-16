@@ -1,12 +1,43 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>MedicalFrontend</title>
+  <title>Alzheimer App - Tableau de bord</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            'background-light': '#f3f4f6',
+            'background-dark': '#111827',
+            'sidebar-light': '#ffffff',
+            'sidebar-dark': '#1f2937',
+            'card-light': '#ffffff',
+            'card-dark': '#374151',
+          },
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          borderRadius: { DEFAULT: '0.5rem', xl: '1rem', '2xl': '1.5rem' },
+        },
+      },
+    };
+  </script>
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #4b5563; }
+  </style>
 </head>
-<body>
+<body class="bg-background-light dark:bg-background-dark font-sans text-gray-700 dark:text-gray-200 h-screen overflow-hidden flex transition-colors duration-200">
   <app-root></app-root>
 </body>
 </html>

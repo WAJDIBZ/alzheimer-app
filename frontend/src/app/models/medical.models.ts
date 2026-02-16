@@ -6,6 +6,8 @@ export interface PatientResponse {
   gender: string;
   phone: string;
   address: string;
+  doctorName: string;
+  riskLevel: string;
   familyHistoryAlzheimer: boolean;
   status: string;
   createdAt: string;
@@ -18,6 +20,8 @@ export interface PatientCreateRequest {
   gender: string;
   phone: string;
   address: string;
+  doctorName: string;
+  riskLevel: string;
   familyHistoryAlzheimer: boolean;
   status: string;
 }

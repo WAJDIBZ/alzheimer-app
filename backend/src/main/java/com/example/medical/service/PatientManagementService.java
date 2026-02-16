@@ -36,7 +36,7 @@ public class PatientManagementService {
 
     public PatientResponse createPatient(PatientCreateRequest request) {
         Patient p = new Patient();
-        applyPatientFields(p, request.getFirstName(), request.getLastName(), request.getDateOfBirth(), request.getGender(), request.getPhone(), request.getAddress(), request.isFamilyHistoryAlzheimer(), request.getStatus());
+        applyPatientFields(p, request.getFirstName(), request.getLastName(), request.getDateOfBirth(), request.getGender(), request.getPhone(), request.getAddress(), request.getDoctorName(), request.getRiskLevel(), request.isFamilyHistoryAlzheimer(), request.getStatus());
         return mapper.toPatientResponse(patientRepository.save(p));
     }
 
@@ -47,7 +47,7 @@ public class PatientManagementService {
 
     public PatientResponse updatePatient(Integer id, PatientUpdateRequest request) {
         Patient p = getPatientOrThrow(id);
-        applyPatientFields(p, request.getFirstName(), request.getLastName(), request.getDateOfBirth(), request.getGender(), request.getPhone(), request.getAddress(), request.isFamilyHistoryAlzheimer(), request.getStatus());
+        applyPatientFields(p, request.getFirstName(), request.getLastName(), request.getDateOfBirth(), request.getGender(), request.getPhone(), request.getAddress(), request.getDoctorName(), request.getRiskLevel(), request.isFamilyHistoryAlzheimer(), request.getStatus());
         return mapper.toPatientResponse(patientRepository.save(p));
     }
 
@@ -161,13 +161,15 @@ public class PatientManagementService {
     }
 
     private void applyPatientFields(Patient p, String firstName, String lastName, java.time.LocalDate dateOfBirth,
-                                    String gender, String phone, String address, boolean familyHistoryAlzheimer, String status) {
+                                    String gender, String phone, String address, String doctorName, String riskLevel, boolean familyHistoryAlzheimer, String status) {
         p.setFirstName(firstName);
         p.setLastName(lastName);
         p.setDateOfBirth(dateOfBirth);
         p.setGender(gender);
         p.setPhone(phone);
         p.setAddress(address);
+        p.setDoctorName(doctorName);
+        p.setRiskLevel(riskLevel);
         p.setFamilyHistoryAlzheimer(familyHistoryAlzheimer);
         p.setStatus(status);
     }

@@ -18,6 +18,8 @@ public class MedicalMapper {
                 .gender(p.getGender())
                 .phone(p.getPhone())
                 .address(p.getAddress())
+                .doctorName(p.getDoctorName())
+                .riskLevel(p.getRiskLevel())
                 .familyHistoryAlzheimer(p.isFamilyHistoryAlzheimer())
                 .status(p.getStatus())
                 .createdAt(p.getCreatedAt())

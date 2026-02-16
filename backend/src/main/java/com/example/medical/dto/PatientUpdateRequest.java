@@ -17,6 +17,8 @@ public class PatientUpdateRequest {
     private String gender;
     private String phone;
     private String address;
+    private String doctorName;
+    private String riskLevel;
     private boolean familyHistoryAlzheimer;
     private String status;
 }
