@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+@include mat.core();
+$theme: mat.define-theme((
+  color: (theme-type: light, primary: mat.$azure-palette)
+));
+:root { @include mat.all-component-themes($theme); }
+body { margin: 0; font-family: Arial, sans-serif; background: #f7f7f8; }
+.page { padding: 1rem; }
+.full-width { width: 100%; }
+.form-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 12px; }
+.actions { display:flex; gap: 12px; align-items:center; margin: 12px 0; }
