@@ -13,7 +13,38 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <!-- Kill Tailwind/browser focus rings on all inputs globally -->
+  <style>
+    *:focus,
+    *:focus-visible {
+      outline: none !important;
+      outline-width: 0 !important
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus,
+    [type="text"]:focus,
+    [type="date"]:focus,
+    [type="email"]:focus,
+    [type="number"]:focus,
+    [type="tel"]:focus,
+    [type="password"]:focus,
+    [type="search"]:focus,
+    [type="url"]:focus,
+    [type="time"]:focus,
+    [type="week"]:focus,
+    [type="month"]:focus,
+    [type="datetime-local"]:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      --tw-ring-shadow: 0 0 #0000 !important;
+      --tw-ring-color: transparent !important;
+      --tw-ring-offset-shadow: 0 0 #0000 !important;
+      border-color: inherit
+    }
+  </style>
   <script>
     tailwind.config = {
       darkMode: 'class',

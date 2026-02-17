@@ -28,24 +28,141 @@ body {
 .page-center   { width: 100%; }
 .page          { width: 100%; }
 
-// ── Angular Material Form Fields ────────────────────────────────────
+// ── Kill ALL focus outlines globally ─────────────────────────────────
+*:focus, *:focus-visible, *:focus-within {
+  outline: none !important;
+  outline-width: 0 !important;
+  outline-style: none !important;
+}
+*:focus {
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+  box-shadow: none !important;
+}
+input, textarea, select, button,
+input:focus, textarea:focus, select:focus, button:focus,
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 0 !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+}
+
+// ── Angular Material CSS custom properties (fill appearance) ────────
+:root {
+  --mdc-filled-text-field-container-color: #f8fafc;
+  --mdc-filled-text-field-focus-active-indicator-color: #6366f1;
+  --mdc-filled-text-field-hover-active-indicator-color: #94a3b8;
+  --mdc-filled-text-field-active-indicator-color: #e2e8f0;
+  --mdc-filled-text-field-error-active-indicator-color: #ef4444;
+  --mdc-filled-text-field-error-focus-active-indicator-color: #ef4444;
+  --mdc-filled-text-field-error-hover-active-indicator-color: #ef4444;
+  --mdc-filled-text-field-focus-label-text-color: #6366f1;
+  --mdc-filled-text-field-label-text-color: #64748b;
+  --mdc-filled-text-field-hover-label-text-color: #475569;
+  --mat-form-field-focus-select-arrow-color: #6366f1;
+  --mat-select-focused-arrow-color: #6366f1;
+}
+
+// ── Angular Material Form Fields (fill appearance) ──────────────────
 .mat-mdc-form-field {
   width: 100%;
 }
 .mat-mdc-form-field-infix {
-  padding: 12px 0 !important;
+  padding-top: 24px !important;
+  padding-bottom: 8px !important;
+  min-height: 48px !important;
 }
-.mat-mdc-text-field-wrapper.mdc-text-field--outlined {
+// Style the fill wrapper — rounded, subtle bg, no harsh borders
+.mat-mdc-text-field-wrapper.mdc-text-field--filled {
   border-radius: 12px !important;
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  // Remove the default bottom line completely
+  .mdc-line-ripple,
+  .mdc-line-ripple::before,
+  .mdc-line-ripple::after {
+    display: none !important;
+  }
 }
-.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading {
-  border-radius: 12px 0 0 12px !important;
+.mat-mdc-text-field-wrapper.mdc-text-field--filled:hover {
+  border-color: #94a3b8 !important;
+  background-color: #f1f5f9 !important;
 }
-.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
-  border-radius: 0 12px 12px 0 !important;
+.mat-mdc-text-field-wrapper.mdc-text-field--filled.mdc-text-field--focused {
+  border-color: #6366f1 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
 }
+.mat-mdc-text-field-wrapper.mdc-text-field--filled.mdc-text-field--invalid {
+  border-color: #ef4444 !important;
+}
+.mat-mdc-text-field-wrapper.mdc-text-field--filled.mdc-text-field--invalid.mdc-text-field--focused {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+// Dark mode fill
+.dark .mat-mdc-text-field-wrapper.mdc-text-field--filled {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+.dark .mat-mdc-text-field-wrapper.mdc-text-field--filled:hover {
+  border-color: #475569 !important;
+  background-color: #1e293b !important;
+}
+.dark .mat-mdc-text-field-wrapper.mdc-text-field--filled.mdc-text-field--focused {
+  background-color: #0f172a !important;
+  border-color: #6366f1 !important;
+}
+
+// ── Datepicker styling ──────────────────────────────────────────────
+.mat-datepicker-toggle {
+  color: #64748b;
+}
+.mat-mdc-form-field.mat-focused .mat-datepicker-toggle {
+  color: #6366f1;
+}
+.mat-datepicker-content {
+  border-radius: 16px !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12) !important;
+}
+.mat-mdc-text-field-wrapper.mdc-text-field--filled.mdc-text-field--invalid.mdc-text-field--focused {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+// Remove default fill underline indicator
+.mdc-text-field--filled .mdc-line-ripple,
+.mdc-text-field--filled .mdc-line-ripple::before,
+.mdc-text-field--filled .mdc-line-ripple::after {
+  display: none !important;
+  border-bottom: none !important;
+  height: 0 !important;
+}
+// Focused label color
+.mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: #6366f1 !important;
+}
+// Remove native styling inside Material fields
+.mat-mdc-form-field input,
+.mat-mdc-form-field textarea,
+.mat-mdc-form-field select,
+.mat-mdc-form-field .mat-mdc-select {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  caret-color: #6366f1;
+}
+
+// ── Show validation errors ──────────────────────────────────────────
 .mat-mdc-form-field-subscript-wrapper {
-  display: none;
+  display: block;
+  font-size: 0.75rem;
+}
+.mat-mdc-form-field-error {
+  color: #ef4444 !important;
+  font-size: 0.75rem !important;
+  font-weight: 500;
 }
 .mat-mdc-form-field-hint-wrapper,
 .mat-mdc-form-field-error-wrapper {

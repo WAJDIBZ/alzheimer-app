@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SoignantApiService } from '../services/soignant-api.service';
 import { PatientDetailsResponse, TreatmentResponse } from '../models/medical.models';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -71,10 +71,22 @@ import { MatSelectModule } from '@angular/material/select';
         </div>
         <div class="p-6">
           <form [formGroup]="recordForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-            <mat-form-field appearance="outline"><mat-label>Diagnostic</mat-label><input matInput formControlName="diagnosis"></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Stade</mat-label><input matInput formControlName="diseaseStage"></mat-form-field>
-            <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Historique</mat-label><textarea matInput rows="3" formControlName="medicalHistory"></textarea></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Allergies</mat-label><input matInput formControlName="allergies"></mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Diagnostic</mat-label>
+              <input matInput formControlName="diagnosis">
+              <mat-error *ngIf="recordForm.get('diagnosis')?.hasError('required')">Le diagnostic est requis</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Stade de la maladie</mat-label>
+              <mat-select formControlName="diseaseStage">
+                <mat-option value="Stade léger">Stade léger</mat-option>
+                <mat-option value="Stade modéré">Stade modéré</mat-option>
+                <mat-option value="Stade avancé">Stade avancé</mat-option>
+                <mat-option value="Stade sévère">Stade sévère</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="md:col-span-2"><mat-label>Historique</mat-label><textarea matInput rows="3" formControlName="medicalHistory"></textarea></mat-form-field>
+            <mat-form-field appearance="fill"><mat-label>Allergies</mat-label><input matInput formControlName="allergies"></mat-form-field>
           </form>
           <div class="flex justify-end mt-4 pt-4 border-t border-slate-200/60 dark:border-slate-700/60">
             <button mat-raised-button color="primary" (click)="saveRecord()">
@@ -113,7 +125,7 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class SoignantPatientDossierComponent implements OnInit {
   id!: number; details!: PatientDetailsResponse; cols = ['name', 'status', 'actions'];
-  recordForm = this.fb.group({ diagnosis: [''], diseaseStage: [''], medicalHistory: [''], allergies: [''] });
+  recordForm = this.fb.group({ diagnosis: ['', Validators.required], diseaseStage: [''], medicalHistory: [''], allergies: [''] });
   constructor(private route: ActivatedRoute, private api: SoignantApiService, private fb: FormBuilder, private dialog: MatDialog) { }
   ngOnInit() { this.id = Number(this.route.snapshot.paramMap.get('id')); this.load(); }
   load() { this.api.getPatient(this.id).subscribe(d => { this.details = d; if (d.medicalRecord) this.recordForm.patchValue(d.medicalRecord); }); }

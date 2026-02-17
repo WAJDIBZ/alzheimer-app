@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -38,34 +38,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
             <span class="font-medium text-sm">Nouveau patient</span>
           </a>
         </nav>
-
-        <div class="my-4 mx-3 border-t border-slate-100 dark:border-slate-800"></div>
-
-        <p class="px-3 mb-2 text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Outils</p>
-        <nav class="space-y-1">
-          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-all duration-150 group">
-            <span class="material-icons-round text-[20px] text-sky-400 group-hover:scale-110 transition-transform">calendar_month</span>
-            <span class="font-medium text-sm">Agenda visuel</span>
-          </a>
-          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-all duration-150 group">
-            <div class="flex items-center gap-3">
-              <span class="material-icons-round text-[20px] text-violet-400 group-hover:scale-110 transition-transform">assessment</span>
-              <span class="font-medium text-sm">Rapports</span>
-            </div>
-            <span class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">1</span>
-          </a>
-          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-all duration-150 group">
-            <div class="flex items-center gap-3">
-              <span class="material-icons-round text-[20px] text-slate-400 group-hover:scale-110 transition-transform">notifications</span>
-              <span class="font-medium text-sm">Notifications</span>
-            </div>
-            <span class="bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">2</span>
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary transition-all duration-150 group">
-            <span class="material-icons-round text-[20px] text-slate-400 group-hover:scale-110 transition-transform">settings</span>
-            <span class="font-medium text-sm">Paramètres</span>
-          </a>
-        </nav>
       </div>
 
       <!-- User card -->
@@ -100,7 +72,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
             <span class="material-icons-round text-slate-500 text-lg block dark:hidden">dark_mode</span>
             <span class="material-icons-round text-slate-400 text-lg hidden dark:block">light_mode</span>
           </button>
-          <button class="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
+          <button (click)="logout()" class="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
             Déconnexion
           </button>
         </div>
@@ -119,5 +91,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   `
 })
 export class AdminLayoutComponent {
+  constructor(private router: Router) { }
   toggleDark() { document.documentElement.classList.toggle('dark'); }
+  logout() { this.router.navigate(['/']); }
 }

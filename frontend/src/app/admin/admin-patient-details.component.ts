@@ -13,13 +13,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog.component';
 import { TreatmentDialogComponent } from '../shared/treatment-dialog.component';
 import { ContactDialogComponent } from '../shared/contact-dialog.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatButtonModule, MatTableModule, MatSnackBarModule, MatDialogModule, MatSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatButtonModule, MatTableModule, MatSnackBarModule, MatDialogModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule],
   template: `
   <div *ngIf="details" class="space-y-6 w-full">
 
@@ -60,14 +62,32 @@ import { ContactDialogComponent } from '../shared/contact-dialog.component';
                 <p class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Informations du patient</p>
               </div>
               <form [formGroup]="patientForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-                <mat-form-field appearance="outline"><mat-label>Prénom</mat-label><input matInput formControlName="firstName"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Nom</mat-label><input matInput formControlName="lastName"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Date de naissance</mat-label><input matInput type="date" formControlName="dateOfBirth"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Genre</mat-label><input matInput formControlName="gender"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Téléphone</mat-label><input matInput formControlName="phone"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Adresse</mat-label><input matInput formControlName="address"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Médecin référent</mat-label><input matInput formControlName="doctorName"></mat-form-field>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="fill"><mat-label>Prénom</mat-label><input matInput formControlName="firstName"></mat-form-field>
+                <mat-form-field appearance="fill"><mat-label>Nom</mat-label><input matInput formControlName="lastName"></mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Date de naissance</mat-label>
+                  <input matInput [matDatepicker]="dobPicker" formControlName="dateOfBirth" (click)="dobPicker.open()">
+                  <mat-datepicker-toggle matIconSuffix [for]="dobPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #dobPicker></mat-datepicker>
+                  <mat-error *ngIf="patientForm.get('dateOfBirth')?.hasError('required')">La date est requise</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Genre</mat-label>
+                  <mat-select formControlName="gender">
+                    <mat-option value="Homme">Homme</mat-option>
+                    <mat-option value="Femme">Femme</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="patientForm.get('gender')?.hasError('required')">Le genre est requis</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Téléphone</mat-label>
+                  <input matInput formControlName="phone" placeholder="12345678" maxlength="8">
+                  <mat-error *ngIf="patientForm.get('phone')?.hasError('required')">Le téléphone est requis</mat-error>
+                  <mat-error *ngIf="patientForm.get('phone')?.hasError('pattern')">Exactement 8 chiffres requis</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill"><mat-label>Adresse</mat-label><input matInput formControlName="address"></mat-form-field>
+                <mat-form-field appearance="fill"><mat-label>Médecin référent</mat-label><input matInput formControlName="doctorName"></mat-form-field>
+                <mat-form-field appearance="fill">
                   <mat-label>Niveau de risque</mat-label>
                   <mat-select formControlName="riskLevel">
                     <mat-option value="Faible">Faible</mat-option>
@@ -75,7 +95,15 @@ import { ContactDialogComponent } from '../shared/contact-dialog.component';
                     <mat-option value="Élevé">Élevé</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Statut</mat-label><input matInput formControlName="status"></mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Statut</mat-label>
+                  <mat-select formControlName="status">
+                    <mat-option value="Suivi régulier">Suivi régulier</mat-option>
+                    <mat-option value="Hospitalisé">Hospitalisé</mat-option>
+                    <mat-option value="En observation">En observation</mat-option>
+                    <mat-option value="Sortie">Sortie</mat-option>
+                  </mat-select>
+                </mat-form-field>
                 <div class="flex items-center px-2 pt-2">
                   <mat-checkbox formControlName="familyHistoryAlzheimer">Antécédents familiaux Alzheimer</mat-checkbox>
                 </div>
@@ -102,10 +130,22 @@ import { ContactDialogComponent } from '../shared/contact-dialog.component';
                 <p class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Dossier médical</p>
               </div>
               <form [formGroup]="recordForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
-                <mat-form-field appearance="outline"><mat-label>Diagnostic</mat-label><input matInput formControlName="diagnosis"></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Stade</mat-label><input matInput formControlName="diseaseStage"></mat-form-field>
-                <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Historique</mat-label><textarea matInput rows="3" formControlName="medicalHistory"></textarea></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Allergies</mat-label><input matInput formControlName="allergies"></mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Diagnostic</mat-label>
+                  <input matInput formControlName="diagnosis">
+                  <mat-error *ngIf="recordForm.get('diagnosis')?.hasError('required')">Le diagnostic est requis</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                  <mat-label>Stade de la maladie</mat-label>
+                  <mat-select formControlName="diseaseStage">
+                    <mat-option value="Stade léger">Stade léger</mat-option>
+                    <mat-option value="Stade modéré">Stade modéré</mat-option>
+                    <mat-option value="Stade avancé">Stade avancé</mat-option>
+                    <mat-option value="Stade sévère">Stade sévère</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="md:col-span-2"><mat-label>Historique</mat-label><textarea matInput rows="3" formControlName="medicalHistory"></textarea></mat-form-field>
+                <mat-form-field appearance="fill"><mat-label>Allergies</mat-label><input matInput formControlName="allergies"></mat-form-field>
               </form>
               <div class="flex justify-end mt-5 pt-4 border-t border-slate-200/60 dark:border-slate-700/60">
                 <button mat-raised-button color="primary" (click)="saveRecord()">
@@ -178,8 +218,8 @@ import { ContactDialogComponent } from '../shared/contact-dialog.component';
 })
 export class AdminPatientDetailsComponent implements OnInit {
   id!: number; details!: PatientDetailsResponse; tCols = ['name', 'dates', 'actions']; cCols = ['name', 'phone', 'actions'];
-  patientForm = this.fb.group({ firstName: ['', Validators.required], lastName: ['', Validators.required], dateOfBirth: ['', Validators.required], gender: [''], phone: [''], address: [''], doctorName: [''], riskLevel: [''], familyHistoryAlzheimer: [false], status: [''] });
-  recordForm = this.fb.group({ diagnosis: [''], diseaseStage: [''], medicalHistory: [''], allergies: [''] });
+  patientForm = this.fb.group({ firstName: ['', Validators.required], lastName: ['', Validators.required], dateOfBirth: ['', Validators.required], gender: ['', Validators.required], phone: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]], address: [''], doctorName: [''], riskLevel: [''], familyHistoryAlzheimer: [false], status: [''] });
+  recordForm = this.fb.group({ diagnosis: ['', Validators.required], diseaseStage: [''], medicalHistory: [''], allergies: [''] });
   constructor(private route: ActivatedRoute, private api: AdminApiService, private fb: FormBuilder, private snack: MatSnackBar, private dialog: MatDialog, private router: Router) { }
   ngOnInit() { this.id = Number(this.route.snapshot.paramMap.get('id')); this.load(); }
   load() { this.api.getPatient(this.id).subscribe(d => { this.details = d; this.patientForm.patchValue(d.patient as any); if (d.medicalRecord) this.recordForm.patchValue(d.medicalRecord); }); }
