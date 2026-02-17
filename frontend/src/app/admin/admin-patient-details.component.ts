@@ -21,105 +21,158 @@ import { ContactDialogComponent } from '../shared/contact-dialog.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatButtonModule, MatTableModule, MatSnackBarModule, MatDialogModule, MatSelectModule],
   template: `
-  <div *ngIf="details" class="space-y-4 max-w-5xl w-full mx-auto">
-    <div class="flex flex-wrap items-center gap-3">
-      <div class="flex items-center gap-2">
-        <span class="material-icons text-purple-800">badge</span>
-        <h2 class="text-xl font-bold text-gray-800 dark:text-white">Dossier patient · {{details.patient.firstName}} {{details.patient.lastName}}</h2>
+  <div *ngIf="details" class="space-y-6 w-full">
+
+    <!-- Patient header card -->
+    <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6 shadow-soft">
+      <div class="flex flex-col md:flex-row md:items-center gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-indigo-500/20 shrink-0">
+          {{ details.patient.firstName.charAt(0) }}{{ details.patient.lastName.charAt(0) }}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-wrap items-center gap-2 mb-1">
+            <h2 class="text-xl font-bold text-slate-800 dark:text-white tracking-tight">{{details.patient.firstName}} {{details.patient.lastName}}</h2>
+            <span class="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">ID #{{id}}</span>
+            <span class="px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold">{{details.patient.status || 'En attente'}}</span>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Né(e) le {{details.patient.dateOfBirth}} &middot; Créé le {{details.patient.createdAt}}</p>
+        </div>
+        <button mat-raised-button color="warn" (click)="deletePatient()" class="shrink-0">
+          <span class="material-icons-round text-base mr-1">delete_outline</span>
+          Supprimer
+        </button>
       </div>
-      <span class="px-3 py-1 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-100 text-sm font-medium">ID #{{id}}</span>
-      <span class="px-3 py-1 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm font-medium">{{details.patient.status || 'En attente'}}</span>
-      <span class="text-sm text-gray-500 dark:text-gray-400">Né(e) le {{details.patient.dateOfBirth}} · Créé le {{details.patient.createdAt}}</span>
-      <span class="flex-1"></span>
-      <button mat-stroked-button color="warn" (click)="deletePatient()">Supprimer</button>
     </div>
 
-    <mat-tab-group>
-      <mat-tab label="Profil">
-        <div class="mt-4 space-y-3">
-          <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-            <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Profil</p>
-            <form [formGroup]="patientForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Prénom</mat-label><input matInput formControlName="firstName"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Nom</mat-label><input matInput formControlName="lastName"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Date de naissance</mat-label><input matInput type="date" formControlName="dateOfBirth"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Genre</mat-label><input matInput formControlName="gender"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Téléphone</mat-label><input matInput formControlName="phone"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Adresse</mat-label><input matInput formControlName="address"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Médecin référent</mat-label><input matInput formControlName="doctorName"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Niveau de risque</mat-label>
-                <mat-select formControlName="riskLevel">
-                  <mat-option value="Faible">Faible</mat-option>
-                  <mat-option value="Moyen">Moyen</mat-option>
-                  <mat-option value="Élevé">Élevé</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Statut</mat-label><input matInput formControlName="status"></mat-form-field>
-              <div class="flex items-center px-2">
-                <mat-checkbox formControlName="familyHistoryAlzheimer">Antécédents familiaux Alzheimer</mat-checkbox>
+    <!-- Tabs -->
+    <div class="bg-white dark:bg-slate-800/80 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 shadow-soft overflow-hidden">
+      <mat-tab-group animationDuration="200ms">
+
+        <!-- Profile Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="flex items-center gap-2"><span class="material-icons-round text-lg">person</span> Profil</span>
+          </ng-template>
+          <div class="p-6">
+            <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl p-6">
+              <div class="flex items-center gap-2 mb-5">
+                <span class="material-icons-round text-primary text-lg">badge</span>
+                <p class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Informations du patient</p>
               </div>
-            </form>
-            <div class="flex justify-end mt-3">
-              <button mat-raised-button color="primary" (click)="savePatient()">Enregistrer</button>
+              <form [formGroup]="patientForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                <mat-form-field appearance="outline"><mat-label>Prénom</mat-label><input matInput formControlName="firstName"></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Nom</mat-label><input matInput formControlName="lastName"></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Date de naissance</mat-label><input matInput type="date" formControlName="dateOfBirth"></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Genre</mat-label><input matInput formControlName="gender"></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Téléphone</mat-label><input matInput formControlName="phone"></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Adresse</mat-label><input matInput formControlName="address"></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Médecin référent</mat-label><input matInput formControlName="doctorName"></mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Niveau de risque</mat-label>
+                  <mat-select formControlName="riskLevel">
+                    <mat-option value="Faible">Faible</mat-option>
+                    <mat-option value="Moyen">Moyen</mat-option>
+                    <mat-option value="Élevé">Élevé</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Statut</mat-label><input matInput formControlName="status"></mat-form-field>
+                <div class="flex items-center px-2 pt-2">
+                  <mat-checkbox formControlName="familyHistoryAlzheimer">Antécédents familiaux Alzheimer</mat-checkbox>
+                </div>
+              </form>
+              <div class="flex justify-end mt-5 pt-4 border-t border-slate-200/60 dark:border-slate-700/60">
+                <button mat-raised-button color="primary" (click)="savePatient()">
+                  <span class="material-icons-round text-base mr-1">save</span>
+                  Enregistrer
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-tab>
+        </mat-tab>
 
-      <mat-tab label="Dossier médical">
-        <div class="mt-4">
-          <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-            <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Dossier médical</p>
-            <form [formGroup]="recordForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Diagnostic</mat-label><input matInput formControlName="diagnosis"></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Stade</mat-label><input matInput formControlName="diseaseStage"></mat-form-field>
-              <mat-form-field appearance="outline" class="md:col-span-2 w-full"><mat-label>Historique</mat-label><textarea matInput formControlName="medicalHistory"></textarea></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Allergies</mat-label><input matInput formControlName="allergies"></mat-form-field>
-            </form>
-            <div class="flex justify-end mt-3">
-              <button mat-raised-button color="primary" (click)="saveRecord()">Enregistrer le dossier</button>
+        <!-- Medical Record Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="flex items-center gap-2"><span class="material-icons-round text-lg">description</span> Dossier médical</span>
+          </ng-template>
+          <div class="p-6">
+            <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl p-6">
+              <div class="flex items-center gap-2 mb-5">
+                <span class="material-icons-round text-primary text-lg">medical_information</span>
+                <p class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Dossier médical</p>
+              </div>
+              <form [formGroup]="recordForm" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+                <mat-form-field appearance="outline"><mat-label>Diagnostic</mat-label><input matInput formControlName="diagnosis"></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Stade</mat-label><input matInput formControlName="diseaseStage"></mat-form-field>
+                <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Historique</mat-label><textarea matInput rows="3" formControlName="medicalHistory"></textarea></mat-form-field>
+                <mat-form-field appearance="outline"><mat-label>Allergies</mat-label><input matInput formControlName="allergies"></mat-form-field>
+              </form>
+              <div class="flex justify-end mt-5 pt-4 border-t border-slate-200/60 dark:border-slate-700/60">
+                <button mat-raised-button color="primary" (click)="saveRecord()">
+                  <span class="material-icons-round text-base mr-1">save</span>
+                  Enregistrer le dossier
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-tab>
+        </mat-tab>
 
-      <mat-tab label="Traitements">
-        <div class="mt-4 space-y-3">
-          <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-600 dark:text-gray-300">Actifs : {{details.treatments.length}}</span>
-            <span class="flex-1"></span>
-            <button mat-raised-button (click)="openTreatment()">Ajouter</button>
+        <!-- Treatments Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="flex items-center gap-2"><span class="material-icons-round text-lg">medication</span> Traitements</span>
+          </ng-template>
+          <div class="p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-icons-round text-primary text-lg">medication</span>
+                <span class="text-sm font-bold text-slate-600 dark:text-slate-300">{{details.treatments.length}} traitement(s) actif(s)</span>
+              </div>
+              <button mat-raised-button color="primary" (click)="openTreatment()">
+                <span class="material-icons-round text-base mr-1">add</span>
+                Ajouter
+              </button>
+            </div>
+            <div class="table-card">
+              <table mat-table [dataSource]="details.treatments">
+                <ng-container matColumnDef="name"><th mat-header-cell *matHeaderCellDef>Nom</th><td mat-cell *matCellDef="let t">{{t.treatmentName}}</td></ng-container>
+                <ng-container matColumnDef="dates"><th mat-header-cell *matHeaderCellDef>Période</th><td mat-cell *matCellDef="let t">{{t.startDate}} — {{t.endDate || '...'}}</td></ng-container>
+                <ng-container matColumnDef="actions"><th mat-header-cell *matHeaderCellDef class="text-right">Actions</th><td mat-cell *matCellDef="let t" class="text-right"><button mat-button color="primary" (click)="openTreatment(t)">Éditer</button><button mat-button color="warn" (click)="deleteTreatment(t)">Supprimer</button></td></ng-container>
+                <tr mat-header-row *matHeaderRowDef="tCols"></tr><tr mat-row *matRowDef="let row; columns: tCols;"></tr>
+              </table>
+            </div>
           </div>
-          <div class="table-card">
-            <table mat-table [dataSource]="details.treatments">
-              <ng-container matColumnDef="name"><th mat-header-cell *matHeaderCellDef>Nom</th><td mat-cell *matCellDef="let t">{{t.treatmentName}}</td></ng-container>
-              <ng-container matColumnDef="dates"><th mat-header-cell *matHeaderCellDef>Période</th><td mat-cell *matCellDef="let t">{{t.startDate}} - {{t.endDate || '...'}}</td></ng-container>
-              <ng-container matColumnDef="actions"><th mat-header-cell *matHeaderCellDef></th><td mat-cell *matCellDef="let t"><button mat-button (click)="openTreatment(t)">Éditer</button><button mat-button color="warn" (click)="deleteTreatment(t)">Supprimer</button></td></ng-container>
-              <tr mat-header-row *matHeaderRowDef="tCols"></tr><tr mat-row *matRowDef="let row; columns: tCols;"></tr>
-            </table>
-          </div>
-        </div>
-      </mat-tab>
+        </mat-tab>
 
-      <mat-tab label="Contacts d'urgence">
-        <div class="mt-4 space-y-3">
-          <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-600 dark:text-gray-300">Contacts : {{details.emergencyContacts.length}}</span>
-            <span class="flex-1"></span>
-            <button mat-raised-button (click)="openContact()">Ajouter</button>
+        <!-- Emergency Contacts Tab -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="flex items-center gap-2"><span class="material-icons-round text-lg">emergency</span> Contacts d'urgence</span>
+          </ng-template>
+          <div class="p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-icons-round text-primary text-lg">emergency</span>
+                <span class="text-sm font-bold text-slate-600 dark:text-slate-300">{{details.emergencyContacts.length}} contact(s)</span>
+              </div>
+              <button mat-raised-button color="primary" (click)="openContact()">
+                <span class="material-icons-round text-base mr-1">add</span>
+                Ajouter
+              </button>
+            </div>
+            <div class="table-card">
+              <table mat-table [dataSource]="details.emergencyContacts">
+                <ng-container matColumnDef="name"><th mat-header-cell *matHeaderCellDef>Nom</th><td mat-cell *matCellDef="let c">{{c.fullName}}</td></ng-container>
+                <ng-container matColumnDef="phone"><th mat-header-cell *matHeaderCellDef>Téléphone</th><td mat-cell *matCellDef="let c">{{c.phone}}</td></ng-container>
+                <ng-container matColumnDef="actions"><th mat-header-cell *matHeaderCellDef class="text-right">Actions</th><td mat-cell *matCellDef="let c" class="text-right"><button mat-button color="primary" (click)="openContact(c)">Éditer</button><button mat-button color="warn" (click)="deleteContact(c)">Supprimer</button></td></ng-container>
+                <tr mat-header-row *matHeaderRowDef="cCols"></tr><tr mat-row *matRowDef="let row; columns: cCols;"></tr>
+              </table>
+            </div>
           </div>
-          <div class="table-card">
-            <table mat-table [dataSource]="details.emergencyContacts">
-              <ng-container matColumnDef="name"><th mat-header-cell *matHeaderCellDef>Nom</th><td mat-cell *matCellDef="let c">{{c.fullName}}</td></ng-container>
-              <ng-container matColumnDef="phone"><th mat-header-cell *matHeaderCellDef>Téléphone</th><td mat-cell *matCellDef="let c">{{c.phone}}</td></ng-container>
-              <ng-container matColumnDef="actions"><th mat-header-cell *matHeaderCellDef></th><td mat-cell *matCellDef="let c"><button mat-button (click)="openContact(c)">Éditer</button><button mat-button color="warn" (click)="deleteContact(c)">Supprimer</button></td></ng-container>
-              <tr mat-header-row *matHeaderRowDef="cCols"></tr><tr mat-row *matRowDef="let row; columns: cCols;"></tr>
-            </table>
-          </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+        </mat-tab>
+
+      </mat-tab-group>
+    </div>
   </div>
   `
 })

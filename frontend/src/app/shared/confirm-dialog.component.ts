@@ -5,13 +5,16 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
-  template: `<div class="glass-card" style="padding:18px;">
-    <div class="eyebrow">Please confirm</div>
-    <h3 style="margin:6px 0 12px;">{{data.message}}</h3>
-    <p>Action cannot be undone. Continue?</p>
-    <div class="actions" style="justify-content:flex-end;margin-top:14px;">
-      <button mat-button (click)="close(false)">Cancel</button>
-      <button mat-raised-button color="warn" (click)="close(true)">Confirm</button>
+  template: `
+  <div class="dialog-shell">
+    <div class="dialog-header">
+      <div class="dialog-eyebrow">Confirmation requise</div>
+      <h3 class="dialog-title">{{data.message}}</h3>
+      <p class="dialog-subtitle">Cette action est irréversible. Voulez-vous continuer ?</p>
+    </div>
+    <div class="dialog-actions">
+      <button mat-button (click)="close(false)">Annuler</button>
+      <button mat-raised-button color="warn" (click)="close(true)">Confirmer</button>
     </div>
   </div>`
 })

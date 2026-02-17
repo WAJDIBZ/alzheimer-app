@@ -1,28 +1,237 @@
 @use '@angular/material' as mat;
 
-// Angular Material light theme aligned with the Tailwind primary color.
+// ── Angular Material Theme ──────────────────────────────────────────
 @include mat.core();
-$primary: mat.define-palette(mat.$blue-palette, 500, 300, 700);
-$accent: mat.define-palette(mat.$amber-palette, A200, A100, A400);
-$warn: mat.define-palette(mat.$red-palette);
+$primary: mat.define-palette(mat.$blue-palette, 600, 400, 800);
+$accent:  mat.define-palette(mat.$teal-palette, A200, A100, A400);
+$warn:    mat.define-palette(mat.$red-palette);
 $theme: mat.define-light-theme((
-  color: (
-    primary: $primary,
-    accent: $accent,
-    warn: $warn,
-  )
+  color: (primary: $primary, accent: $accent, warn: $warn)
 ));
 @include mat.all-component-themes($theme);
 
-* { box-sizing: border-box; }
-body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+// ── Reset & Base ────────────────────────────────────────────────────
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f0f2f5;
+  color: #1e293b;
+  line-height: 1.6;
+}
 
-// Utility helpers used across templates
-.actions { display: flex; align-items: center; gap: 12px; }
-.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
-.full-width { width: 100%; }
+// ── Utility Helpers ─────────────────────────────────────────────────
+.actions       { display: flex; align-items: center; gap: 12px; }
+.form-grid     { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.full-width    { width: 100%; }
+.page-center   { width: 100%; }
+.page          { width: 100%; }
 
-/* Harmonise les champs Angular Material avec le design Tailwind */
-.mat-mdc-form-field { width: 100%; }
-.mat-mdc-form-field-infix { padding: 12px 0; }
-.mat-mdc-text-field-wrapper.mdc-text-field--outlined { border-radius: 12px; }
+// ── Angular Material Form Fields ────────────────────────────────────
+.mat-mdc-form-field {
+  width: 100%;
+}
+.mat-mdc-form-field-infix {
+  padding: 12px 0 !important;
+}
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined {
+  border-radius: 12px !important;
+}
+.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__leading {
+  border-radius: 12px 0 0 12px !important;
+}
+.mdc-text-field--outlined .mdc-notched-outline .mdc-notched-outline__trailing {
+  border-radius: 0 12px 12px 0 !important;
+}
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+.mat-mdc-form-field-hint-wrapper,
+.mat-mdc-form-field-error-wrapper {
+  padding: 0 !important;
+}
+
+// ── Angular Material Tabs ───────────────────────────────────────────
+.mat-mdc-tab-group {
+  .mat-mdc-tab-header {
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .mat-mdc-tab {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    letter-spacing: 0.01em !important;
+    min-width: 120px !important;
+  }
+  .mdc-tab-indicator__content--underline {
+    border-radius: 4px 4px 0 0 !important;
+    border-top-width: 3px !important;
+  }
+}
+
+// ── Angular Material Tables ─────────────────────────────────────────
+.table-card {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+.dark .table-card {
+  border-color: #374151;
+  background: #1f2937;
+}
+.mat-mdc-table {
+  width: 100% !important;
+  background: transparent !important;
+  font-family: 'Inter', sans-serif !important;
+
+  .mat-mdc-header-row {
+    background: #f8fafc !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+  }
+  .dark & .mat-mdc-header-row {
+    background: #111827 !important;
+    border-bottom-color: #374151 !important;
+  }
+  .mat-mdc-header-cell {
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: #64748b !important;
+    padding: 14px 16px !important;
+    border-bottom: none !important;
+  }
+  .mat-mdc-row {
+    transition: background 0.15s ease;
+    &:hover { background: #f1f5f9 !important; }
+    &:last-child .mat-mdc-cell { border-bottom: none !important; }
+  }
+  .dark & .mat-mdc-row:hover { background: #1e293b !important; }
+  .mat-mdc-cell {
+    padding: 12px 16px !important;
+    font-size: 0.875rem !important;
+    color: #334155 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+  }
+  .dark & .mat-mdc-cell {
+    color: #cbd5e1 !important;
+    border-bottom-color: #1e293b !important;
+  }
+}
+
+// ── Angular Material Dialogs ────────────────────────────────────────
+.mat-mdc-dialog-container {
+  .mdc-dialog__surface {
+    border-radius: 20px !important;
+    overflow: hidden !important;
+  }
+}
+.dialog-shell {
+  padding: 28px 32px;
+  min-width: 420px;
+}
+.dialog-header {
+  margin-bottom: 20px;
+}
+.dialog-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #3b82f6;
+  margin-bottom: 4px;
+}
+.dialog-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+.dark .dialog-title { color: #f1f5f9; }
+.dialog-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-top: 4px;
+}
+.dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+.dark .dialog-actions { border-top-color: #374151; }
+
+// ── Angular Material Buttons ────────────────────────────────────────
+.mat-mdc-raised-button, .mat-mdc-unelevated-button {
+  border-radius: 10px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  padding: 0 20px !important;
+  height: 40px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06) !important;
+  transition: all 0.2s ease !important;
+  &:hover {
+    box-shadow: 0 4px 12px rgba(59,130,246,0.25) !important;
+    transform: translateY(-1px);
+  }
+}
+.mat-mdc-outlined-button, .mat-mdc-button {
+  border-radius: 10px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+// ── Angular Material Checkbox ───────────────────────────────────────
+.mat-mdc-checkbox {
+  font-family: 'Inter', sans-serif !important;
+}
+
+// ── Angular Material Cards ──────────────────────────────────────────
+.mat-mdc-card {
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 20px !important;
+  transition: box-shadow 0.2s ease;
+  &:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06) !important; }
+}
+.dark .mat-mdc-card {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+}
+
+// ── Angular Material Select ─────────────────────────────────────────
+.mat-mdc-select-panel {
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12) !important;
+}
+
+// ── Angular Material Snack Bar ──────────────────────────────────────
+.mat-mdc-snack-bar-container {
+  border-radius: 12px !important;
+  .mdc-snackbar__surface {
+    border-radius: 12px !important;
+  }
+}
+
+// ── Legacy class support (used in old templates) ────────────────────
+.glass-card {
+  padding: 28px 32px;
+  min-width: 420px;
+}
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #3b82f6;
+  margin-bottom: 4px;
+}

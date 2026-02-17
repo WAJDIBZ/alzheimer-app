@@ -1,101 +1,124 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
-  <div class="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark text-gray-700 dark:text-gray-200 transition-colors duration-200">
-    <aside class="w-64 bg-sidebar-light dark:bg-sidebar-dark border-r border-gray-200 dark:border-gray-700 flex flex-col h-full shrink-0 z-20 transition-colors duration-200">
-      <div class="p-6 flex items-center space-x-3">
-        <div class="bg-gradient-to-br from-pink-400 to-purple-500 rounded-lg p-1.5 shadow-sm">
-          <span class="material-icons text-white text-xl">medical_services</span>
+  <div class="flex h-screen overflow-hidden bg-background-light dark:bg-background-dark transition-colors duration-200">
+
+    <!-- Sidebar -->
+    <aside class="w-[272px] bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-slate-800 flex flex-col h-full shrink-0 z-20 transition-colors duration-200">
+
+      <!-- Logo -->
+      <div class="px-6 py-5 flex items-center gap-3 border-b border-slate-100 dark:border-slate-800">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-teal-500/20">
+          <span class="material-icons text-white text-xl">psychology</span>
         </div>
         <div>
-          <h1 class="text-primary font-bold text-lg leading-tight">Alzheimer</h1>
-          <h1 class="text-primary font-bold text-lg leading-tight">App</h1>
+          <h1 class="text-base font-extrabold text-slate-800 dark:text-white tracking-tight leading-none">Alzheimer<span class="text-teal-600 dark:text-teal-400">App</span></h1>
+          <p class="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">Espace Soignant</p>
         </div>
       </div>
-      <div class="flex-1 overflow-y-auto custom-scrollbar px-3 py-2 space-y-1">
-        <a class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-primary transition-colors" routerLink="/">
-          <span class="material-icons-outlined text-orange-400">home</span>
-          <span class="font-medium">Accueil</span>
-        </a>
-        <a class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-primary font-semibold relative" routerLink="/soignant/patients">
-          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full"></div>
-          <span class="material-icons text-purple-600">people</span>
-          <span>Mes Patients</span>
-        </a>
-        <a class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">
-          <span class="material-icons-outlined text-red-300">edit_note</span>
-          <span class="font-medium">Suivi quotidien</span>
-        </a>
-        <a class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">
-          <span class="material-icons-outlined text-blue-400">calendar_month</span>
-          <span class="font-medium">Agenda visuel</span>
-        </a>
-        <a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-primary transition-colors group" href="#">
-          <div class="flex items-center space-x-3">
-            <span class="material-icons-outlined text-green-400">bar_chart</span>
-            <span class="font-medium group-hover:text-primary">Rapports</span>
-          </div>
-          <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
-        </a>
-        <div class="pt-4 pb-2">
-          <div class="border-t border-gray-100 dark:border-gray-700"></div>
-        </div>
-        <a class="flex items-center justify-between px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">
-          <div class="flex items-center space-x-3">
-            <span class="material-icons-outlined text-gray-400">notifications</span>
-            <span class="font-medium">Notifications</span>
-          </div>
-          <span class="bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">2</span>
-        </a>
-        <a class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">
-          <span class="material-icons-outlined text-gray-400">settings</span>
-          <span class="font-medium">Paramètres</span>
-        </a>
-        <a class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">
-          <span class="material-icons text-purple-800">person</span>
-          <span class="font-medium">Mon Profil</span>
-        </a>
+
+      <!-- Navigation -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar px-3 pt-5 pb-3">
+        <p class="px-3 mb-2 text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Navigation</p>
+        <nav class="space-y-1">
+          <a routerLink="/" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group">
+            <span class="material-icons-round text-[20px] text-amber-500 group-hover:scale-110 transition-transform">home</span>
+            <span class="font-medium text-sm">Accueil</span>
+          </a>
+          <a routerLink="/soignant/patients" routerLinkActive="!bg-teal-50 dark:!bg-teal-900/20 !text-teal-600 dark:!text-teal-400 !font-semibold" [routerLinkActiveOptions]="{exact:true}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group relative">
+            <span class="material-icons-round text-[20px] text-indigo-500 group-hover:scale-110 transition-transform">people</span>
+            <span class="text-sm">Mes Patients</span>
+          </a>
+        </nav>
+
+        <div class="my-4 mx-3 border-t border-slate-100 dark:border-slate-800"></div>
+
+        <p class="px-3 mb-2 text-[10px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">Outils</p>
+        <nav class="space-y-1">
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group">
+            <span class="material-icons-round text-[20px] text-rose-400 group-hover:scale-110 transition-transform">edit_note</span>
+            <span class="font-medium text-sm">Suivi quotidien</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group">
+            <span class="material-icons-round text-[20px] text-sky-400 group-hover:scale-110 transition-transform">calendar_month</span>
+            <span class="font-medium text-sm">Agenda visuel</span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group">
+            <div class="flex items-center gap-3">
+              <span class="material-icons-round text-[20px] text-emerald-400 group-hover:scale-110 transition-transform">bar_chart</span>
+              <span class="font-medium text-sm">Rapports</span>
+            </div>
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          </a>
+          <a href="#" class="flex items-center justify-between px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group">
+            <div class="flex items-center gap-3">
+              <span class="material-icons-round text-[20px] text-slate-400 group-hover:scale-110 transition-transform">notifications</span>
+              <span class="font-medium text-sm">Notifications</span>
+            </div>
+            <span class="bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">2</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group">
+            <span class="material-icons-round text-[20px] text-slate-400 group-hover:scale-110 transition-transform">settings</span>
+            <span class="font-medium text-sm">Paramètres</span>
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-teal-600 transition-all duration-150 group">
+            <span class="material-icons-round text-[20px] text-violet-500 group-hover:scale-110 transition-transform">person</span>
+            <span class="font-medium text-sm">Mon Profil</span>
+          </a>
+        </nav>
       </div>
-      <div class="p-4 border-t border-gray-100 dark:border-gray-700">
-        <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 flex items-center space-x-3 border border-gray-100 dark:border-gray-700">
-          <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg">S</div>
+
+      <!-- User card -->
+      <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+        <div class="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-800/60 rounded-xl p-3 flex items-center gap-3 border border-slate-200/60 dark:border-slate-700/60">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">M</div>
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-bold text-gray-900 dark:text-white truncate">Marie Martin</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 truncate">Soignant</p>
+            <p class="text-sm font-bold text-slate-800 dark:text-white truncate">Marie Martin</p>
+            <p class="text-xs text-slate-400 dark:text-slate-500 truncate">Soignant</p>
           </div>
+          <span class="material-icons-round text-slate-400 text-lg">more_horiz</span>
         </div>
       </div>
     </aside>
 
-    <main class="flex-1 flex flex-col h-full min-w-0 overflow-hidden bg-background-light dark:bg-background-dark">
-      <header class="bg-sidebar-light dark:bg-sidebar-dark border-b border-gray-200 dark:border-gray-700 h-16 flex items-center justify-between px-8 shrink-0">
-        <div class="flex items-center space-x-3">
-          <span class="material-icons text-purple-800 text-2xl">people</span>
-          <h2 class="text-xl font-bold text-gray-800 dark:text-white">Mes Patients</h2>
+    <!-- Main content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
+
+      <!-- Top bar -->
+      <header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 h-16 flex items-center justify-between px-8 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-900/20 flex items-center justify-center">
+            <span class="material-icons-round text-teal-600 dark:text-teal-400 text-lg">medical_services</span>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-800 dark:text-white leading-none">Espace Soignant</h2>
+            <p class="text-xs text-slate-400 dark:text-slate-500 mt-0.5">Suivi des patients</p>
+          </div>
         </div>
-        <div class="flex items-center space-x-4">
-          <button class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors shadow-sm">
+        <div class="flex items-center gap-3">
+          <button (click)="toggleDark()" class="w-9 h-9 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
+            <span class="material-icons-round text-slate-500 text-lg block dark:hidden">dark_mode</span>
+            <span class="material-icons-round text-slate-400 text-lg hidden dark:block">light_mode</span>
+          </button>
+          <button class="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
             Déconnexion
           </button>
         </div>
       </header>
-      <div class="flex-1 overflow-y-auto p-8">
-        <div class="max-w-6xl w-full mx-auto">
-          <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 min-h-full">
+
+      <!-- Page content -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar">
+        <div class="p-6 md:p-8 animate-fade-in">
+          <div class="w-full max-w-[1200px] mx-auto">
             <router-outlet />
           </div>
         </div>
       </div>
     </main>
-
-    <button aria-label="Basculer le mode sombre" class="fixed bottom-6 right-6 p-3 rounded-full bg-primary text-white shadow-lg hover:shadow-xl transition-all z-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" (click)="toggleDark()">
-      <span class="material-icons block dark:hidden">dark_mode</span>
-      <span class="material-icons hidden dark:block">light_mode</span>
-    </button>
   </div>
   `
 })

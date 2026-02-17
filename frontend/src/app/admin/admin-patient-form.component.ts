@@ -14,36 +14,57 @@ import { MatSelectModule } from '@angular/material/select';
   standalone: true,
   imports: [ReactiveFormsModule, MatSnackBarModule, MatCardModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatButtonModule, MatSelectModule],
   template: `
-  <div class="space-y-6 max-w-5xl w-full mx-auto">
-    <div class="bg-gradient-to-r from-blue-50 via-white to-blue-50 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-sm">
-      <div>
-        <p class="text-xs font-semibold text-primary uppercase tracking-[0.2em] mb-1">Alzheimer App</p>
-        <h3 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100">Créer un nouveau patient</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Saisissez les informations essentielles pour générer le dossier.</p>
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold dark:bg-blue-900/40 dark:text-blue-100">Formulaire</span>
+  <div class="space-y-6 w-full">
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 md:p-8 shadow-lg shadow-blue-500/15">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-icons-round text-white/60 text-lg">person_add</span>
+            <p class="text-xs font-bold text-white/70 uppercase tracking-[0.2em]">Nouveau patient</p>
+          </div>
+          <h3 class="text-2xl font-bold text-white tracking-tight">Créer un dossier patient</h3>
+          <p class="text-sm text-blue-100 mt-1">Saisissez les informations essentielles pour générer le dossier.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-4 py-1.5 rounded-full bg-white/15 backdrop-blur text-white text-sm font-semibold border border-white/20">Formulaire</span>
+        </div>
       </div>
     </div>
 
-    <div class="bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 w-full rounded-2xl shadow-soft space-y-6 p-6">
-      <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-        <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Identité</p>
-        <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Prénom</mat-label><input matInput formControlName="firstName"></mat-form-field>
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Nom</mat-label><input matInput formControlName="lastName"></mat-form-field>
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Date de naissance</mat-label><input matInput type="date" formControlName="dateOfBirth"></mat-form-field>
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Genre</mat-label><input matInput formControlName="gender"></mat-form-field>
+    <!-- Identity section -->
+    <div class="bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl shadow-soft overflow-hidden">
+      <div class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200/60 dark:border-slate-700/60 px-6 py-4">
+        <div class="flex items-center gap-2">
+          <span class="material-icons-round text-primary text-lg">badge</span>
+          <p class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Identité</p>
+        </div>
+      </div>
+      <div class="p-6">
+        <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+          <mat-form-field appearance="outline"><mat-label>Prénom</mat-label><input matInput formControlName="firstName"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Nom</mat-label><input matInput formControlName="lastName"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Date de naissance</mat-label><input matInput type="date" formControlName="dateOfBirth"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Genre</mat-label><input matInput formControlName="gender"></mat-form-field>
         </form>
       </div>
+    </div>
 
-      <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4">
-        <p class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Contact & suivi</p>
-        <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Téléphone</mat-label><input matInput formControlName="phone"></mat-form-field>
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Adresse</mat-label><input matInput formControlName="address"></mat-form-field>
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Médecin référent</mat-label><input matInput formControlName="doctorName"></mat-form-field>
-          <mat-form-field appearance="outline" class="w-full">
+    <!-- Contact & follow-up section -->
+    <div class="bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60 rounded-2xl shadow-soft overflow-hidden">
+      <div class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200/60 dark:border-slate-700/60 px-6 py-4">
+        <div class="flex items-center gap-2">
+          <span class="material-icons-round text-teal-600 text-lg">contact_phone</span>
+          <p class="text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">Contact & suivi</p>
+        </div>
+      </div>
+      <div class="p-6">
+        <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2">
+          <mat-form-field appearance="outline"><mat-label>Téléphone</mat-label><input matInput formControlName="phone"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Adresse</mat-label><input matInput formControlName="address"></mat-form-field>
+          <mat-form-field appearance="outline"><mat-label>Médecin référent</mat-label><input matInput formControlName="doctorName"></mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Niveau de risque</mat-label>
             <mat-select formControlName="riskLevel">
               <mat-option value="Faible">Faible</mat-option>
@@ -51,16 +72,21 @@ import { MatSelectModule } from '@angular/material/select';
               <mat-option value="Élevé">Élevé</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-form-field appearance="outline" class="w-full"><mat-label>Statut</mat-label><input matInput formControlName="status" placeholder="Ex: Modéré, Léger"></mat-form-field>
-          <div class="flex items-center px-2">
+          <mat-form-field appearance="outline"><mat-label>Statut</mat-label><input matInput formControlName="status" placeholder="Ex: Modéré, Léger"></mat-form-field>
+          <div class="flex items-center px-2 pt-2">
             <mat-checkbox formControlName="familyHistoryAlzheimer">Antécédents familiaux Alzheimer</mat-checkbox>
           </div>
         </form>
       </div>
+    </div>
 
-      <div class="flex justify-end">
-        <button mat-raised-button color="primary" class="px-5" (click)="save()" [disabled]="form.invalid">Créer le dossier</button>
-      </div>
+    <!-- Submit -->
+    <div class="flex justify-end">
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid"
+        class="!px-8 !py-2.5 !text-sm">
+        <span class="material-icons-round text-base mr-1">add_circle</span>
+        Créer le dossier
+      </button>
     </div>
   </div>
   `

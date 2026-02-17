@@ -9,20 +9,23 @@ import { TreatmentResponse } from '../models/medical.models';
 @Component({
   standalone: true,
   imports: [MatDialogModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
-  template: `<div class="glass-card" style="padding:18px;">
-    <div class="eyebrow">{{data ? 'Edit' : 'Add'}} treatment</div>
-    <h3 style="margin:6px 0 12px;">Treatment plan</h3>
+  template: `
+  <div class="dialog-shell">
+    <div class="dialog-header">
+      <div class="dialog-eyebrow">{{data ? 'Modifier' : 'Ajouter'}} un traitement</div>
+      <h3 class="dialog-title">Plan de traitement</h3>
+    </div>
     <form [formGroup]="form" class="form-grid">
-      <mat-form-field appearance="outline"><mat-label>Name</mat-label><input matInput formControlName="treatmentName"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Nom</mat-label><input matInput formControlName="treatmentName"></mat-form-field>
       <mat-form-field appearance="outline"><mat-label>Dosage</mat-label><input matInput formControlName="dosage"></mat-form-field>
-      <mat-form-field appearance="outline"><mat-label>Frequency</mat-label><input matInput formControlName="frequency"></mat-form-field>
-      <mat-form-field appearance="outline"><mat-label>Start</mat-label><input matInput type="date" formControlName="startDate"></mat-form-field>
-      <mat-form-field appearance="outline"><mat-label>End</mat-label><input matInput type="date" formControlName="endDate"></mat-form-field>
-      <mat-form-field appearance="outline"><mat-label>Status</mat-label><input matInput formControlName="status"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Fréquence</mat-label><input matInput formControlName="frequency"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Date de début</mat-label><input matInput type="date" formControlName="startDate"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Date de fin</mat-label><input matInput type="date" formControlName="endDate"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Statut</mat-label><input matInput formControlName="status"></mat-form-field>
     </form>
-    <div class="actions" style="justify-content:flex-end;margin-top:14px;">
-      <button mat-button (click)="ref.close()">Cancel</button>
-      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Save</button>
+    <div class="dialog-actions">
+      <button mat-button (click)="ref.close()">Annuler</button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Enregistrer</button>
     </div>
   </div>`
 })

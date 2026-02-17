@@ -9,18 +9,21 @@ import { EmergencyContactResponse } from '../models/medical.models';
 @Component({
   standalone: true,
   imports: [MatDialogModule, ReactiveFormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
-  template: `<div class="glass-card" style="padding:18px;">
-    <div class="eyebrow">{{data ? 'Edit' : 'Add'}} contact</div>
-    <h3 style="margin:6px 0 12px;">Emergency contact</h3>
+  template: `
+  <div class="dialog-shell">
+    <div class="dialog-header">
+      <div class="dialog-eyebrow">{{data ? 'Modifier' : 'Ajouter'}} un contact</div>
+      <h3 class="dialog-title">Contact d'urgence</h3>
+    </div>
     <form [formGroup]="form" class="form-grid">
-      <mat-form-field appearance="outline"><mat-label>Full name</mat-label><input matInput formControlName="fullName"></mat-form-field>
-      <mat-form-field appearance="outline"><mat-label>Relationship</mat-label><input matInput formControlName="relationship"></mat-form-field>
-      <mat-form-field appearance="outline"><mat-label>Phone</mat-label><input matInput formControlName="phone"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Nom complet</mat-label><input matInput formControlName="fullName"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Relation</mat-label><input matInput formControlName="relationship"></mat-form-field>
+      <mat-form-field appearance="outline"><mat-label>Téléphone</mat-label><input matInput formControlName="phone"></mat-form-field>
       <mat-form-field appearance="outline"><mat-label>Email</mat-label><input matInput formControlName="email"></mat-form-field>
     </form>
-    <div class="actions" style="justify-content:flex-end;margin-top:14px;">
-      <button mat-button (click)="ref.close()">Cancel</button>
-      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Save</button>
+    <div class="dialog-actions">
+      <button mat-button (click)="ref.close()">Annuler</button>
+      <button mat-raised-button color="primary" (click)="save()" [disabled]="form.invalid">Enregistrer</button>
     </div>
   </div>`
 })
