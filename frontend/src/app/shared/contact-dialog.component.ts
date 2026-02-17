@@ -28,7 +28,7 @@ import { EmergencyContactResponse } from '../models/medical.models';
   </div>`
 })
 export class ContactDialogComponent {
-  form = this.fb.group({fullName:[this.data?.fullName??'',Validators.required], relationship:[this.data?.relationship??''], phone:[this.data?.phone??'',Validators.required], email:[this.data?.email??'',Validators.email]});
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: EmergencyContactResponse | null, public ref: MatDialogRef<ContactDialogComponent>) {}
-  save(){ this.ref.close(this.form.value); }
+  form = this.fb.group({ fullName: [this.data?.fullName ?? '', Validators.required], relationship: [this.data?.relationship ?? ''], phone: [this.data?.phone ?? '', Validators.required], email: [this.data?.email ?? '', Validators.email] });
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: EmergencyContactResponse | null, public ref: MatDialogRef<ContactDialogComponent>) { }
+  save() { this.ref.close(this.form.value); }
 }

@@ -102,7 +102,7 @@ export class AdminPatientsListComponent implements OnInit {
   patients: PatientResponse[] = [];
   search = '';
 
-  constructor(private api: AdminApiService) {}
+  constructor(private api: AdminApiService) { }
 
   ngOnInit() { this.api.getPatients().subscribe((d) => this.patients = d); }
 

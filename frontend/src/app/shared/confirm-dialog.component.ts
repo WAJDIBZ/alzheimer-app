@@ -19,6 +19,6 @@ import { MatButtonModule } from '@angular/material/button';
   </div>`
 })
 export class ConfirmDialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: {message: string}, private ref: MatDialogRef<ConfirmDialogComponent>) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { message: string }, private ref: MatDialogRef<ConfirmDialogComponent>) { }
   close(result: boolean) { this.ref.close(result); }
 }

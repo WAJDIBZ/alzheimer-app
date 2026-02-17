@@ -34,6 +34,6 @@ export class TreatmentDialogComponent {
     treatmentName: [this.data?.treatmentName ?? '', Validators.required], dosage: [this.data?.dosage ?? ''], frequency: [this.data?.frequency ?? ''],
     startDate: [this.data?.startDate ?? '', Validators.required], endDate: [this.data?.endDate ?? ''], status: [this.data?.status ?? '']
   });
-  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: TreatmentResponse | null, public ref: MatDialogRef<TreatmentDialogComponent>) {}
-  save(){ this.ref.close(this.form.value); }
+  constructor(private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) public data: TreatmentResponse | null, public ref: MatDialogRef<TreatmentDialogComponent>) { }
+  save() { this.ref.close(this.form.value); }
 }

@@ -93,17 +93,17 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class AdminPatientFormComponent {
   form = this.fb.group({
-    firstName:['',Validators.required],
-    lastName:['',Validators.required],
-    dateOfBirth:['',Validators.required],
-    gender:[''],
-    phone:[''],
-    address:[''],
-    doctorName:[''],
-    riskLevel:[''],
-    familyHistoryAlzheimer:[false],
-    status:['']
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    dateOfBirth: ['', Validators.required],
+    gender: [''],
+    phone: [''],
+    address: [''],
+    doctorName: [''],
+    riskLevel: [''],
+    familyHistoryAlzheimer: [false],
+    status: ['']
   });
-  constructor(private fb: FormBuilder, private api: AdminApiService, private snack: MatSnackBar, private router: Router) {}
-  save(){ this.api.createPatient(this.form.value as any).subscribe({next:r=>{this.snack.open('Patient créé','OK',{duration:2000}); this.router.navigate(['/admin/patients',r.idPatient]);}, error:e=>this.snack.open(e.error?.message||'Erreur','OK')}); }
+  constructor(private fb: FormBuilder, private api: AdminApiService, private snack: MatSnackBar, private router: Router) { }
+  save() { this.api.createPatient(this.form.value as any).subscribe({ next: r => { this.snack.open('Patient créé', 'OK', { duration: 2000 }); this.router.navigate(['/admin/patients', r.idPatient]); }, error: e => this.snack.open(e.error?.message || 'Erreur', 'OK') }); }
 }

@@ -112,12 +112,12 @@ import { MatSelectModule } from '@angular/material/select';
   `
 })
 export class SoignantPatientDossierComponent implements OnInit {
-  id!: number; details!: PatientDetailsResponse; cols=['name','status','actions'];
-  recordForm = this.fb.group({diagnosis:[''],diseaseStage:[''],medicalHistory:[''],allergies:['']});
-  constructor(private route: ActivatedRoute, private api: SoignantApiService, private fb: FormBuilder, private dialog: MatDialog) {}
-  ngOnInit(){ this.id=Number(this.route.snapshot.paramMap.get('id')); this.load(); }
-  load(){ this.api.getPatient(this.id).subscribe(d=>{this.details=d; if(d.medicalRecord) this.recordForm.patchValue(d.medicalRecord);}); }
-  saveRecord(){ this.api.updateMedicalRecord(this.id,this.recordForm.value as any).subscribe(()=>this.load()); }
-  openTreatment(t?: TreatmentResponse){ this.dialog.open(TreatmentDialogComponent,{data:t??null}).afterClosed().subscribe(v=>{if(!v)return; const op=t?this.api.updateTreatment(this.id,t.idTreatment,v):this.api.addTreatment(this.id,v); op.subscribe(()=>this.load());}); }
-  deleteTreatment(t: TreatmentResponse){ this.api.deleteTreatment(this.id,t.idTreatment).subscribe(()=>this.load()); }
+  id!: number; details!: PatientDetailsResponse; cols = ['name', 'status', 'actions'];
+  recordForm = this.fb.group({ diagnosis: [''], diseaseStage: [''], medicalHistory: [''], allergies: [''] });
+  constructor(private route: ActivatedRoute, private api: SoignantApiService, private fb: FormBuilder, private dialog: MatDialog) { }
+  ngOnInit() { this.id = Number(this.route.snapshot.paramMap.get('id')); this.load(); }
+  load() { this.api.getPatient(this.id).subscribe(d => { this.details = d; if (d.medicalRecord) this.recordForm.patchValue(d.medicalRecord); }); }
+  saveRecord() { this.api.updateMedicalRecord(this.id, this.recordForm.value as any).subscribe(() => this.load()); }
+  openTreatment(t?: TreatmentResponse) { this.dialog.open(TreatmentDialogComponent, { data: t ?? null }).afterClosed().subscribe(v => { if (!v) return; const op = t ? this.api.updateTreatment(this.id, t.idTreatment, v) : this.api.addTreatment(this.id, v); op.subscribe(() => this.load()); }); }
+  deleteTreatment(t: TreatmentResponse) { this.api.deleteTreatment(this.id, t.idTreatment).subscribe(() => this.load()); }
 }

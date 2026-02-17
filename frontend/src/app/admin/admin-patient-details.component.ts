@@ -177,17 +177,17 @@ import { ContactDialogComponent } from '../shared/contact-dialog.component';
   `
 })
 export class AdminPatientDetailsComponent implements OnInit {
-  id!: number; details!: PatientDetailsResponse; tCols=['name','dates','actions']; cCols=['name','phone','actions'];
-  patientForm = this.fb.group({firstName:['',Validators.required],lastName:['',Validators.required],dateOfBirth:['',Validators.required],gender:[''],phone:[''],address:[''],doctorName:[''],riskLevel:[''],familyHistoryAlzheimer:[false],status:['']});
-  recordForm = this.fb.group({diagnosis:[''],diseaseStage:[''],medicalHistory:[''],allergies:['']});
-  constructor(private route: ActivatedRoute, private api: AdminApiService, private fb: FormBuilder, private snack: MatSnackBar, private dialog: MatDialog, private router: Router) {}
-  ngOnInit(){ this.id = Number(this.route.snapshot.paramMap.get('id')); this.load(); }
-  load(){ this.api.getPatient(this.id).subscribe(d=>{this.details=d; this.patientForm.patchValue(d.patient as any); if(d.medicalRecord) this.recordForm.patchValue(d.medicalRecord);}); }
-  savePatient(){ this.api.updatePatient(this.id, this.patientForm.value as any).subscribe(()=>{this.snack.open('Patient mis à jour','OK',{duration:1500}); this.load();}); }
-  saveRecord(){ const req=this.recordForm.value as any; const op = this.details.medicalRecord ? this.api.updateMedicalRecord(this.id,req) : this.api.createMedicalRecord(this.id,req); op.subscribe(()=>{this.snack.open('Dossier sauvegardé','OK',{duration:1500}); this.load();}); }
-  deletePatient(){ const ref=this.dialog.open(ConfirmDialogComponent,{data:{message:'Supprimer ce patient ?'}}); ref.afterClosed().subscribe(ok=>{if(ok){this.api.deletePatient(this.id).subscribe(()=>{this.router.navigate(['/admin/patients']);});}}); }
-  openTreatment(t?: TreatmentResponse){ this.dialog.open(TreatmentDialogComponent,{data:t??null}).afterClosed().subscribe(v=>{if(!v)return; const op=t?this.api.updateTreatment(this.id,t.idTreatment,v):this.api.addTreatment(this.id,v); op.subscribe(()=>this.load());}); }
-  deleteTreatment(t: TreatmentResponse){ this.api.deleteTreatment(this.id,t.idTreatment).subscribe(()=>this.load()); }
-  openContact(c?: EmergencyContactResponse){ this.dialog.open(ContactDialogComponent,{data:c??null}).afterClosed().subscribe(v=>{if(!v)return; const op=c?this.api.updateContact(this.id,c.idContact,v):this.api.addContact(this.id,v); op.subscribe(()=>this.load());}); }
-  deleteContact(c: EmergencyContactResponse){ this.api.deleteContact(this.id,c.idContact).subscribe(()=>this.load()); }
+  id!: number; details!: PatientDetailsResponse; tCols = ['name', 'dates', 'actions']; cCols = ['name', 'phone', 'actions'];
+  patientForm = this.fb.group({ firstName: ['', Validators.required], lastName: ['', Validators.required], dateOfBirth: ['', Validators.required], gender: [''], phone: [''], address: [''], doctorName: [''], riskLevel: [''], familyHistoryAlzheimer: [false], status: [''] });
+  recordForm = this.fb.group({ diagnosis: [''], diseaseStage: [''], medicalHistory: [''], allergies: [''] });
+  constructor(private route: ActivatedRoute, private api: AdminApiService, private fb: FormBuilder, private snack: MatSnackBar, private dialog: MatDialog, private router: Router) { }
+  ngOnInit() { this.id = Number(this.route.snapshot.paramMap.get('id')); this.load(); }
+  load() { this.api.getPatient(this.id).subscribe(d => { this.details = d; this.patientForm.patchValue(d.patient as any); if (d.medicalRecord) this.recordForm.patchValue(d.medicalRecord); }); }
+  savePatient() { this.api.updatePatient(this.id, this.patientForm.value as any).subscribe(() => { this.snack.open('Patient mis à jour', 'OK', { duration: 1500 }); this.load(); }); }
+  saveRecord() { const req = this.recordForm.value as any; const op = this.details.medicalRecord ? this.api.updateMedicalRecord(this.id, req) : this.api.createMedicalRecord(this.id, req); op.subscribe(() => { this.snack.open('Dossier sauvegardé', 'OK', { duration: 1500 }); this.load(); }); }
+  deletePatient() { const ref = this.dialog.open(ConfirmDialogComponent, { data: { message: 'Supprimer ce patient ?' } }); ref.afterClosed().subscribe(ok => { if (ok) { this.api.deletePatient(this.id).subscribe(() => { this.router.navigate(['/admin/patients']); }); } }); }
+  openTreatment(t?: TreatmentResponse) { this.dialog.open(TreatmentDialogComponent, { data: t ?? null }).afterClosed().subscribe(v => { if (!v) return; const op = t ? this.api.updateTreatment(this.id, t.idTreatment, v) : this.api.addTreatment(this.id, v); op.subscribe(() => this.load()); }); }
+  deleteTreatment(t: TreatmentResponse) { this.api.deleteTreatment(this.id, t.idTreatment).subscribe(() => this.load()); }
+  openContact(c?: EmergencyContactResponse) { this.dialog.open(ContactDialogComponent, { data: c ?? null }).afterClosed().subscribe(v => { if (!v) return; const op = c ? this.api.updateContact(this.id, c.idContact, v) : this.api.addContact(this.id, v); op.subscribe(() => this.load()); }); }
+  deleteContact(c: EmergencyContactResponse) { this.api.deleteContact(this.id, c.idContact).subscribe(() => this.load()); }
 }

@@ -93,8 +93,8 @@ export class SoignantPatientsListComponent implements OnInit {
   patients: PatientResponse[] = [];
   search = '';
 
-  constructor(private api: SoignantApiService) {}
-  ngOnInit(){ this.api.getPatients().subscribe(d=>this.patients=d); }
+  constructor(private api: SoignantApiService) { }
+  ngOnInit() { this.api.getPatients().subscribe(d => this.patients = d); }
 
   filtered() {
     const s = this.search.toLowerCase();
