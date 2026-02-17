@@ -63,7 +63,7 @@ export class ContactDialogComponent {
   form = this.fb.group({
     fullName: [this.data?.fullName ?? '', Validators.required],
     relationship: [this.data?.relationship ?? '', Validators.required],
-    phone: [this.data?.phone ?? '', [Validators.required, Validators.pattern(/^\d{8}$/)]],  
+    phone: [this.data?.phone ?? '', [Validators.required, Validators.pattern(/^\d{8}$/)]],
     email: [this.data?.email ?? '', Validators.email]
   });
   constructor(
